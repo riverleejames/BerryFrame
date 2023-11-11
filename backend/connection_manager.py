@@ -23,7 +23,7 @@ class ConnectionManager:
 
     Methods:
         get_instance(): Returns the singleton instance of the ConnectionManager.
-        connect(host, username, password): Establishes an SSH connection to a specified host.
+        connect(host, port, username, password, key_path): Establishes an SSH connection to host.
         disconnect(): Closes the SSH connection.
         execute_command(command): Executes a given command on the connected host.
     """
@@ -61,19 +61,24 @@ class ConnectionManager:
             ConnectionManager._instance = ConnectionManager()
         return ConnectionManager._instance
 
-    def connect(self, host, username, password):
+    def connect(self, host, port, username, password, key_path):
         """
         Establishes an SSH connection to a specified host.
 
-        Connects using the provided host, username, and password. If the connection
-        is successful, the method sets up the SSH client with the given credentials.
+        Connects using the provided host, port, username, password, and key_path.
+        If the connection is successful, the method sets up the SSH client with
+        the given credentials.
 
         Args:
             host (str): The hostname or IP address of the server to connect to.
+            port (int): The port number for the SSH connection.
             username (str): The username for the SSH connection.
             password (str): The password for the SSH connection.
+            key_path (str): The path to the SSH key file.
         """
-        self.ssh_client.connect(host, username=username, password=password)
+        self.ssh_client.connect(
+            host, port, username=username, password=password, key_filename=key_path
+        )
 
     def disconnect(self):
         """
