@@ -5,6 +5,7 @@ for fetching system statistics like CPU usage, memory usage, disk space, and
 running processes.
 """
 
+from paramiko import SSHException, AuthenticationException
 from backend.connection_manager import ConnectionManager
 
 
@@ -16,26 +17,38 @@ def execute_remote_command(command):
         command (str): The command to be executed on the remote server.
 
     Returns:
-        str: The output of the executed command.
+        str: The output of the executed command, or an error message in case of failure.
     """
-    connection_manager = ConnectionManager.get_instance()
-    output = connection_manager.execute_command(command)
-    return output
+    try:
+        # Get the singleton instance of ConnectionManager
+        connection_manager = ConnectionManager.get_instance()
+        # Execute the command and get the output
+        output = connection_manager.execute_command(command)
+        # Trim the output to remove unnecessary whitespaces and newlines
+        return output.strip()
+    except (SSHException, AuthenticationException, ConnectionResetError) as e:
+        # Handle specific exceptions (e.g., connection issues, command errors)
+        return f"Error executing command '{command}': {e}"
 
 
 def get_system_stats():
     """
-    Retrieves various system statistics from the remote server such as CPU usage,
-    memory usage, disk space, and running processes.
+    Retrieves various system statistics such as CPU usage, memory usage,
+    disk space, and running processes from a Raspberry Pi.
 
     Returns:
         Tuple[str, str, str, str]: A tuple containing CPU usage, memory usage,
                                    disk space, and list of running processes.
     """
-    cpu_usage = execute_remote_command("top -bn1 | grep 'Cpu(s)'")
-    memory_usage = execute_remote_command("free -m")
-    disk_space = execute_remote_command("df -h")
-    running_processes = execute_remote_command("ps -e")
+    cpu_usage = execute_remote_command("top -bn1 | grep 'Cpu(s)' | awk '{print $2+$4}'")
+    memory_usage = execute_remote_command(
+        "free -m | awk 'NR==2{printf \"Memory Usage: %s/%sMB (%.2f%%)\", $3,$2,$3*100/$2 }'"
+    )
+    disk_space = execute_remote_command(
+        'df -h | awk \'$NF=="/"{printf "Disk Usage: %d/%dGB (%s)", $3,$2,$5}\''
+    )
+    running_processes = execute_remote_command("ps -e | wc -l")
+
     return cpu_usage, memory_usage, disk_space, running_processes
 
 

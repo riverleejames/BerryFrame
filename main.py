@@ -13,7 +13,7 @@ The script demonstrates how to:
 
 import configparser
 from backend.connection_manager import ConnectionManager
-from backend.api_functions import execute_remote_command
+from backend.api_functions import get_system_stats
 
 # Read configuration settings
 config = configparser.ConfigParser()
@@ -33,8 +33,11 @@ if __name__ == "__main__":
     CONNECTION_MANAGER.connect(host, port, username, password, key_path)
 
     # Execute a sample command and print the output
-    output = execute_remote_command("ls")
-    print(output)
+    cpu, memory, disk, processes = get_system_stats()
+    print(f"CPU Usage: {cpu}%")
+    print(memory)
+    print(disk)
+    print(f"Running Processes: {processes}")
 
     # Disconnect from the server
     CONNECTION_MANAGER.disconnect()
