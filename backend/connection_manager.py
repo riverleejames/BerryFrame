@@ -103,3 +103,13 @@ class ConnectionManager:
         """
         _, stdout, _ = self.ssh_client.exec_command(command)
         return stdout.read().decode()
+
+    @staticmethod
+    def reset_instance():
+        """
+        Resets the singleton instance of the ConnectionManager.
+
+        This method is intended for use in unit testing to ensure that each test
+        starts with a fresh instance of the ConnectionManager.
+        """
+        ConnectionManager._instance = None

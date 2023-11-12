@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 paramiko = "*"
+pytest = "*"
+black = "*"
+pytest-mock = "*"
+pylint-pytest = "*"
 
 [dev-packages]
 
