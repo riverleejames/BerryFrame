@@ -12,8 +12,9 @@ The script demonstrates how to:
 """
 
 import configparser
+from api.api_function_factory import APIFunctionFactory
+
 from backend.connection_manager import ConnectionManager
-from backend.api_functions import get_system_stats
 
 # Read configuration settings
 config = configparser.ConfigParser()
@@ -33,11 +34,10 @@ if __name__ == "__main__":
     CONNECTION_MANAGER.connect(host, port, username, password, key_path)
 
     # Execute a sample command and print the output
-    cpu, memory, disk, processes = get_system_stats()
-    print(f"CPU Usage: {cpu}%")
-    print(memory)
-    print(disk)
-    print(f"Running Processes: {processes}")
+    factory = APIFunctionFactory()
+    execute_command_function = factory.create_api_function("ExecuteRemoteCommand")
+    result = execute_command_function.execute("neofetch")
+    print(result)
 
     # Disconnect from the server
     CONNECTION_MANAGER.disconnect()

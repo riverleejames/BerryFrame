@@ -163,3 +163,4 @@ cython_debug/
 .idea/
 Pipfile.lock
 Pipfile.lock
+.vscode/settings.json
