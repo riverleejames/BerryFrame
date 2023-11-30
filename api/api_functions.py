@@ -2,7 +2,7 @@
 This module defines a set of API function classes for remote system operations. 
 
 It includes classes for executing remote commands, retrieving system statistics, 
-uploading and downloading files using a connection manager. Each class inherits 
+and uploading and downloading files using a connection manager. Each class inherits 
 from the base class 'APIFunction' and implements an execute method for its specific functionality.
 """
 
@@ -26,7 +26,7 @@ class ExecuteRemoteCommand(APIFunction):
     """
     API function for executing a remote command.
 
-    This class allows execution of a command on a remote server using the ConnectionManager.
+    This class allows the execution of a command on a remote server using the ConnectionManager.
     It handles specific exceptions related to SSH connections and command execution.
     """
 

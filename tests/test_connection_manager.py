@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import paramiko
 import pytest
 
-from backend.connection_manager import ConnectionManager
+from backend.connection_manager import ConnectionManager, Observer
 
 
 @pytest.fixture(autouse=True)
@@ -107,3 +107,36 @@ def test_execute_command():
 
         assert output == expected_output
         mock_ssh_client.exec_command.assert_called_with(command)
+
+
+def test_observer_notification_on_connect():
+    """
+    Test that observers are notified with the correct status when a connection is established.
+    """
+    observer_mock = MagicMock(spec=Observer)
+    manager = ConnectionManager.get_instance()
+    manager.attach(observer_mock)
+
+    with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
+        mock_ssh_client.connect.return_value = None
+        manager.connect("host", 22, "user", "pass", None)
+
+        observer_mock.update.assert_called_once_with("Connected")
+
+
+def test_observer_notification_on_disconnect():
+    """
+    Test that observers are notified of the correct status when a connection is terminated.
+    """
+    observer_mock = MagicMock(spec=Observer)
+    manager = ConnectionManager.get_instance()
+    manager.attach(observer_mock)
+
+    with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
+        mock_ssh_client.connect.return_value = None
+        manager.connect("host", 22, "user", "pass", None)
+
+        mock_ssh_client.close.return_value = None
+        manager.disconnect()
+
+        observer_mock.update.assert_called_with("Disconnected")
