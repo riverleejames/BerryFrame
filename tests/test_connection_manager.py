@@ -58,9 +58,7 @@ def test_ssh_connection():
     manager = ConnectionManager.get_instance()
 
     with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
-        manager.connect(
-            test_host, test_port, test_username, test_password, test_key_path
-        )
+        manager.connect(test_host, test_port, test_username, test_password, test_key_path)
 
         mock_ssh_client.connect.assert_called_with(
             test_host,
@@ -119,7 +117,7 @@ def test_observer_notification_on_connect():
 
     with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
         mock_ssh_client.connect.return_value = None
-        manager.connect("host", 22, "user", "pass", None)
+        manager.connect("host", 22, "user", "pass", "")
 
         observer_mock.update.assert_called_once_with("Connected")
 
@@ -134,7 +132,7 @@ def test_observer_notification_on_disconnect():
 
     with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
         mock_ssh_client.connect.return_value = None
-        manager.connect("host", 22, "user", "pass", None)
+        manager.connect("host", 22, "user", "pass", "")
 
         mock_ssh_client.close.return_value = None
         manager.disconnect()

@@ -1,5 +1,5 @@
 """
-This package module initializes the components of the [Your Package Name] package.
+This package module initializes the components of the package.
 
 The __init__.py file is used to consolidate the package's classes, functions, and resources, making them
 accessible when the package is imported. It can also be used to define any necessary initialization code
