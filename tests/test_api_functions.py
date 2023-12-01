@@ -4,15 +4,17 @@ It includes fixtures and test cases for various API functions such as executing 
 retrieving system statistics, and handling file uploads and downloads.
 """
 
-import pytest
 from unittest.mock import MagicMock, patch
-from backend.connection_manager import ConnectionManager
+
+import pytest
+
 from api.api_functions import (
     ExecuteRemoteCommand,
     GetSystemStats,
     UploadFile,
     DownloadFile,
 )
+from backend.connection_manager import ConnectionManager
 
 # Constants for API function names
 EXECUTE_REMOTE_COMMAND = "ExecuteRemoteCommand"

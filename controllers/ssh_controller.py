@@ -20,8 +20,9 @@ Each method in the SSHController class is designed for a specific operation:
 - execute_command: Executes a specified command on the remote server.
 - disconnect: Terminates the connection with the remote server.
 
-The module demonstrates the use of design patterns like Singleton (ConnectionManager) and Observer (ConnectionStatusLogger,
-ConnectionAlertSystem) to create a robust and maintainable SSH connection handling system.
+The module demonstrates the use of design patterns like Singleton (ConnectionManager)
+and Observer (ConnectionStatusLogger, ConnectionAlertSystem) to create a robust and
+maintainable SSH connection handling system.
 
 Example:
     ssh_controller = SSHController(host, port, username, password, key_path)
@@ -31,8 +32,8 @@ Example:
 
 """
 
-from backend.connection_manager import ConnectionManager, Observer
 from api.api_function_factory import APIFunctionFactory
+from backend.connection_manager import ConnectionManager, Observer
 from views.ssh_view import SSHView
 
 
@@ -93,9 +94,7 @@ class SSHController:
         Returns:
             None
         """
-        self.connection_manager.connect(
-            self.host, self.port, self.username, self.password, self.key_path
-        )
+        self.connection_manager.connect(self.host, self.port, self.username, self.password, self.key_path)
         self.view.show_message("Connected to " + self.host)
 
     def execute_command(self, command):
