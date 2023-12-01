@@ -33,42 +33,110 @@ Note:
     correctly set up and accessible to the test environment.
 """
 
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import Mock, patch
+
 from controllers.ssh_controller import SSHController
 
 
 @pytest.fixture(autouse=True)
 def reset_connection_manager():
+    """
+        A pytest fixture that resets the ConnectionManager's instance before each test.
+
+        This fixture is automatically used for every test function in this module. It patches
+        the ConnectionManager's reset_instance method to ensure that each test starts with a fresh
+        instance of the ConnectionManager, thereby avoiding shared state across tests.
+
+        Yields:
+            None
+    """
     with patch("backend.connection_manager.ConnectionManager.reset_instance"):
         yield
 
 
 @pytest.fixture
 def mock_connection_manager():
+    """
+        A pytest fixture that provides a mock of the ConnectionManager.
+
+        This fixture creates a mock for the ConnectionManager.get_instance method, allowing tests
+        to simulate and control the behavior of the ConnectionManager without making actual SSH connections.
+
+        Yields:
+            MagicMock: A mock object representing an instance of ConnectionManager.
+        """
     with patch("backend.connection_manager.ConnectionManager.get_instance") as mock:
         yield mock.return_value
 
 
 @pytest.fixture
 def mock_view():
+    """
+    A pytest fixture that provides a mock of the SSHView class.
+
+    This fixture creates a mock for the SSHView class, enabling tests to verify interactions
+    between the SSHController and the view component without needing a real view implementation.
+
+    Yields:
+        MagicMock: A mock object representing an instance of SSHView.
+    """
     with patch("views.ssh_view.SSHView") as mock:
         yield mock.return_value
 
 
 @pytest.fixture
 def mock_factory():
+    """
+    A pytest fixture that provides a mock of the APIFunctionFactory.
+
+    This fixture sets up a mock for the APIFunctionFactory, used by the SSHController for
+    creating API function instances. It allows tests to control and inspect the use of API functions
+    within the SSHController.
+
+    Yields:
+        MagicMock: A mock object representing an instance of APIFunctionFactory.
+    """
     with patch("api.api_function_factory.APIFunctionFactory") as mock:
         yield mock.return_value
 
 
 @pytest.fixture
 def ssh_controller(mock_connection_manager, mock_view, mock_factory):
+    """
+    A pytest fixture that creates an instance of SSHController with mocked dependencies.
+
+    This fixture constructs an SSHController object using mocked instances of the ConnectionManager,
+    SSHView, and APIFunctionFactory. It is used to test the SSHController's methods in isolation from
+    its external dependencies.
+
+    Args:
+        mock_connection_manager (MagicMock): The mock connection manager instance.
+        mock_view (MagicMock): The mock SSH view instance.
+        mock_factory (MagicMock): The mock API function factory instance.
+
+    Returns:
+        SSHController: An instance of SSHController with mocked dependencies.
+    """
     return SSHController("host", 22, "username", "password", "key_path", view=mock_view)
 
 
 def test_initialization(ssh_controller, mock_connection_manager):
-    # Test initialization and observer attachment
+    """
+    Tests the initialization process of the SSHController.
+
+    This test verifies that the SSHController correctly attaches itself as an observer to the
+    ConnectionManager during its initialization. The test checks the number of times the attach method
+    is called on the mock ConnectionManager.
+
+    Args:
+        ssh_controller (SSHController): The SSHController instance to be tested.
+        mock_connection_manager (MagicMock): The mocked ConnectionManager instance.
+
+    Asserts:
+        The attach method of the mock ConnectionManager is called the expected number of times.
+    """
     assert mock_connection_manager.attach.call_count == 2
 
 
@@ -88,9 +156,7 @@ def test_connect(ssh_controller, mock_connection_manager, mock_view):
         None
     """
     ssh_controller.connect()
-    mock_connection_manager.connect.assert_called_with(
-        "host", 22, "username", "password", "key_path"
-    )
+    mock_connection_manager.connect.assert_called_with("host", 22, "username", "password", "key_path")
     mock_view.show_message.assert_called_with("Connected to host")
 
 

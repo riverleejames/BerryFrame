@@ -3,8 +3,8 @@ Main script for managing SSH connections and executing commands on a remote serv
 
 This script illustrates the process of setting up an SSH connection, executing a command,
 and then closing the connection. It leverages the SSHController class from the 'controllers.ssh_controller' module
-for efficient SSH connection management. The script is configured to read SSH connection details from a 'config.ini' file
-and implements the Observer pattern to provide updates on the status of the SSH connection.
+for efficient SSH connection management. The script is configured to read SSH connection details from a 'config.ini'
+file and implements the Observer pattern to provide updates on the status of the SSH connection.
 
 Key functionalities demonstrated in this script:
 - Reading SSH configuration details from a 'config.ini' file.
@@ -12,19 +12,19 @@ Key functionalities demonstrated in this script:
 - Executing a remote command on the server using the execute_command method of SSHController.
 - Safely disconnecting from the SSH server after executing the necessary commands.
 
-This script is an example of how to integrate different components (SSHController, configuration file, and Observer pattern)
-to create a cohesive and functional SSH management system. It is particularly useful for scenarios where automated remote
-server management and command execution are required.
+This script is an example of how to integrate different components (SSHController, configuration file,
+and Observer pattern) to create a cohesive and functional SSH management system. It is particularly
+useful for scenarios where automated remote server management and command execution are required.
 
 Example Usage:
-    This script can be executed directly from the command line after configuring the 'config.ini' file with the appropriate
-    SSH connection details. The script will read these details, connect to the specified SSH server, execute a predefined
-    command (in this case, 'neofetch'), and then close the connection.
+    This script can be executed directly from the command line after configuring the 'config.ini' file with
+    the appropriate SSH connection details. The script will read these details, connect to the specified
+    SSH server, execute a predefined command (in this case, 'neofetch'), and then close the connection.
 
 """
 
-
 import configparser
+
 from controllers.ssh_controller import SSHController
 
 

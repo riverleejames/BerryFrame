@@ -23,7 +23,8 @@ class APIFunctionFactory:
     remote commands, getting system statistics, uploading files, and downloading files.
     """
 
-    def create_api_function(self, function_type):
+    @staticmethod
+    def create_api_function(function_type):
         """
         Creates and returns an instance of an API function class.
 
