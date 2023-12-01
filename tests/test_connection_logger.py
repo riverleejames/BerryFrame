@@ -1,5 +1,5 @@
 """
-Unit tests for the ConnectionLogger class in the observers module.
+Unit tests for the ConnectionLogger class in the observer module.
 
 This module is dedicated to testing the ConnectionLogger class, particularly its update method.
 It aims to verify that the ConnectionLogger correctly logs messages about the network connection status.
@@ -32,4 +32,6 @@ def test_connection_logger_update(monkeypatch):
     logger.update(test_status)
 
     # Assert that print was called with the correct message
-    mock_print.assert_called_once_with(f"ConnectionLogger: Network status changed to {test_status}")
+    mock_print.assert_called_once_with(
+        f"ConnectionLogger: Network status changed to {test_status}"
+    )

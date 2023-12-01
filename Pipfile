@@ -9,6 +9,7 @@ pytest = "*"
 black = "*"
 pytest-mock = "*"
 pylint-pytest = "*"
+pytest-cov = "*"
 
 [dev-packages]
 

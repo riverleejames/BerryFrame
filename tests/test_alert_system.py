@@ -1,5 +1,5 @@
 """
-Unit tests for the AlertSystem class in the observers module.
+Unit tests for the AlertSystem class in the observer module.
 
 This module contains unit tests for the AlertSystem class, specifically testing its update method.
 The tests ensure that the AlertSystem correctly handles and responds to status updates, such as changes
@@ -30,4 +30,6 @@ def test_alert_system_update(monkeypatch):
     alert_system.update(test_status)
 
     # Assert that print was called correctly
-    mock_print.assert_called_once_with(f"AlertSystem: Alert - Network status is now {test_status}")
+    mock_print.assert_called_once_with(
+        f"AlertSystem: Alert - Network status is now {test_status}"
+    )
