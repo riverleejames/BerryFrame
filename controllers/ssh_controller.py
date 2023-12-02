@@ -32,8 +32,8 @@ Example:
 
 """
 
-from api.api_function_factory import APIFunctionFactory
-from backend.connection_manager import ConnectionManager, Observer
+from model.api.api_function_factory import APIFunctionFactory
+from model.backend.connection_manager import ConnectionManager, Observer
 from views.ssh_view import SSHView
 
 
@@ -94,7 +94,9 @@ class SSHController:
         Returns:
             None
         """
-        self.connection_manager.connect(self.host, self.port, self.username, self.password, self.key_path)
+        self.connection_manager.connect(
+            self.host, self.port, self.username, self.password, self.key_path
+        )
         self.view.show_message("Connected to " + self.host)
 
     def execute_command(self, command):

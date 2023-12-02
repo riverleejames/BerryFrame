@@ -8,7 +8,7 @@ from the base class 'APIFunction' and implements an execute method for its speci
 
 from paramiko import SSHException, AuthenticationException
 
-from backend.connection_manager import ConnectionManager
+from model.backend.connection_manager import ConnectionManager
 
 
 class APIFunction:
@@ -48,23 +48,23 @@ class ExecuteRemoteCommand(APIFunction):
 
     def execute(self, command):
         """
-            Executes a specified command on a remote server.
+        Executes a specified command on a remote server.
 
-            This method connects to the remote server using the ConnectionManager and executes
-            the provided command. It returns the command's output or an error message if an
-            exception occurs.
+        This method connects to the remote server using the ConnectionManager and executes
+        the provided command. It returns the command's output or an error message if an
+        exception occurs.
 
-            Args:
-                command (str): The command to be executed on the remote server.
+        Args:
+            command (str): The command to be executed on the remote server.
 
-            Returns:
-                str: The output of the executed command, or an error message if the execution fails.
+        Returns:
+            str: The output of the executed command, or an error message if the execution fails.
 
-            Raises:
-                SSHException: Raised when there is an issue with the SSH connection.
-                AuthenticationException: Raised for authentication issues.
-                ConnectionResetError: Raised when the connection is reset unexpectedly.
-            """
+        Raises:
+            SSHException: Raised when there is an issue with the SSH connection.
+            AuthenticationException: Raised for authentication issues.
+            ConnectionResetError: Raised when the connection is reset unexpectedly.
+        """
         try:
             # Get the singleton instance of ConnectionManager
             connection_manager = ConnectionManager.get_instance()
@@ -87,21 +87,25 @@ class GetSystemStats(APIFunction):
 
     def execute(self):
         """
-           Retrieves various system statistics from a remote server.
+        Retrieves various system statistics from a remote server.
 
-           This method gathers CPU usage, memory usage, disk space, and running process counts
-           by executing relevant system commands on the remote server. It utilizes the
-           ExecuteRemoteCommand class for executing these commands.
+        This method gathers CPU usage, memory usage, disk space, and running process counts
+        by executing relevant system commands on the remote server. It utilizes the
+        ExecuteRemoteCommand class for executing these commands.
 
-           Returns:
-               tuple: A tuple containing CPU usage, memory usage, disk space, and running process count.
-           """
+        Returns:
+            tuple: A tuple containing CPU usage, memory usage, disk space, and running process count.
+        """
         command_executor = ExecuteRemoteCommand()
-        cpu_usage = command_executor.execute("top -bn1 | grep 'Cpu(s)' | awk '{print $2+$4}'")
+        cpu_usage = command_executor.execute(
+            "top -bn1 | grep 'Cpu(s)' | awk '{print $2+$4}'"
+        )
         memory_usage = command_executor.execute(
             "free -m | awk 'NR==2{printf \"Memory Usage: %s/%sMB (%.2f%%)\", $3,$2,$3*100/$2 }'"
         )
-        disk_space = command_executor.execute('df -h | awk \'$NF=="/"{printf "Disk Usage: %d/%dGB (%s)", $3,$2,$5}\'')
+        disk_space = command_executor.execute(
+            'df -h | awk \'$NF=="/"{printf "Disk Usage: %d/%dGB (%s)", $3,$2,$5}\''
+        )
         running_processes = command_executor.execute("ps -e | wc -l")
 
         return cpu_usage, memory_usage, disk_space, running_processes
@@ -117,19 +121,19 @@ class UploadFile(APIFunction):
 
     def execute(self, local_path, remote_path):
         """
-           Uploads a file from the local system to a remote server.
+        Uploads a file from the local system to a remote server.
 
-           This method establishes an SFTP connection via the ConnectionManager and uploads
-           a file from the specified local path to the specified remote path.
+        This method establishes an SFTP connection via the ConnectionManager and uploads
+        a file from the specified local path to the specified remote path.
 
-           Args:
-               local_path (str): The path of the file on the local system to be uploaded.
-               remote_path (str): The path on the remote server where the file will be stored.
+        Args:
+            local_path (str): The path of the file on the local system to be uploaded.
+            remote_path (str): The path on the remote server where the file will be stored.
 
-           Raises:
-               IOError: Raised if there is an issue with file reading or writing.
-               SSHException: Raised if there is an issue with the SFTP connection.
-           """
+        Raises:
+            IOError: Raised if there is an issue with file reading or writing.
+            SSHException: Raised if there is an issue with the SFTP connection.
+        """
         connection_manager = ConnectionManager.get_instance()
         sftp_client = connection_manager.ssh_client.open_sftp()
         sftp_client.put(local_path, remote_path)
@@ -146,19 +150,19 @@ class DownloadFile(APIFunction):
 
     def execute(self, remote_path, local_path):
         """
-            Downloads a file from a remote server to the local system.
+        Downloads a file from a remote server to the local system.
 
-            This method establishes an SFTP connection via the ConnectionManager and downloads
-            a file from the specified remote path to the specified local path.
+        This method establishes an SFTP connection via the ConnectionManager and downloads
+        a file from the specified remote path to the specified local path.
 
-            Args:
-                remote_path (str): The path of the file on the remote server to be downloaded.
-                local_path (str): The path on the local system where the file will be stored.
+        Args:
+            remote_path (str): The path of the file on the remote server to be downloaded.
+            local_path (str): The path on the local system where the file will be stored.
 
-            Raises:
-                IOError: Raised if there is an issue with file reading or writing.
-                SSHException: Raised if there is an issue with the SFTP connection.
-            """
+        Raises:
+            IOError: Raised if there is an issue with file reading or writing.
+            SSHException: Raised if there is an issue with the SFTP connection.
+        """
         connection_manager = ConnectionManager.get_instance()
         sftp_client = connection_manager.ssh_client.open_sftp()
         sftp_client.get(remote_path, local_path)

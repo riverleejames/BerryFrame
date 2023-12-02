@@ -8,13 +8,13 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from api.api_functions import (
+from model.api.api_functions import (
     ExecuteRemoteCommand,
     GetSystemStats,
     UploadFile,
     DownloadFile,
 )
-from backend.connection_manager import ConnectionManager
+from model.backend.connection_manager import ConnectionManager
 
 # Constants for API function names
 EXECUTE_REMOTE_COMMAND = "ExecuteRemoteCommand"
