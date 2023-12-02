@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 import paramiko
 import pytest
 
-from backend.connection_manager import ConnectionManager, Observer
+from model.backend.connection_manager import ConnectionManager, Observer
 
 
 @pytest.fixture(autouse=True)
@@ -58,7 +58,9 @@ def test_ssh_connection():
     manager = ConnectionManager.get_instance()
 
     with patch.object(manager, "ssh_client", new_callable=MagicMock) as mock_ssh_client:
-        manager.connect(test_host, test_port, test_username, test_password, test_key_path)
+        manager.connect(
+            test_host, test_port, test_username, test_password, test_key_path
+        )
 
         mock_ssh_client.connect.assert_called_with(
             test_host,

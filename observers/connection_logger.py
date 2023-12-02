@@ -12,7 +12,7 @@ applications in network management, diagnostics, or any system where keeping
 track of network status changes is critical for operation or troubleshooting.
 """
 
-from backend.connection_manager import Observer
+from model.backend.connection_manager import Observer
 
 
 class ConnectionLogger(Observer):

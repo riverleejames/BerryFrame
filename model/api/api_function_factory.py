@@ -6,7 +6,7 @@ and returning objects of various API function classes such as ExecuteRemoteComma
 GetSystemStats, UploadFile, and DownloadFile based on the requested function type.
 """
 
-from api.api_functions import (
+from model.api.api_functions import (
     DownloadFile,
     ExecuteRemoteCommand,
     GetSystemStats,

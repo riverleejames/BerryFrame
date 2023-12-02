@@ -13,7 +13,7 @@ connection management system, it can provide immediate feedback, such as printin
 messages or triggering alerts, in response to changes in network connectivity.
 """
 
-from backend.connection_manager import Observer
+from model.backend.connection_manager import Observer
 
 
 class AlertSystem(Observer):

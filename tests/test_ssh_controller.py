@@ -52,7 +52,7 @@ def reset_connection_manager():
         Yields:
             None
     """
-    with patch("backend.connection_manager.ConnectionManager.reset_instance"):
+    with patch("model.backend.connection_manager.ConnectionManager.reset_instance"):
         yield
 
 
@@ -67,7 +67,7 @@ def mock_connection_manager():
         Yields:
             MagicMock: A mock object representing an instance of ConnectionManager.
         """
-    with patch("backend.connection_manager.ConnectionManager.get_instance") as mock:
+    with patch("model.backend.connection_manager.ConnectionManager.get_instance") as mock:
         yield mock.return_value
 
 
@@ -98,7 +98,7 @@ def mock_factory():
     Yields:
         MagicMock: A mock object representing an instance of APIFunctionFactory.
     """
-    with patch("api.api_function_factory.APIFunctionFactory") as mock:
+    with patch("model.api.api_function_factory.APIFunctionFactory") as mock:
         yield mock.return_value
 
 

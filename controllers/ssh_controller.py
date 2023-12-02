@@ -1,17 +1,19 @@
 """
 Module for managing SSH connections and executing remote commands.
 
-This module contains classes and functions for establishing SSH connections, managing these connections,
-and executing commands on a remote server. It follows the Observer pattern to provide updates on connection status.
+This module contains classes and functions for establishing SSH connections, managing
+these connections, and executing commands on a remote server. It follows the Observer 
+pattern to provide updates on connection status.
 
 Classes:
     ConnectionStatusLogger: An observer class that logs connection status changes.
     ConnectionAlertSystem: An observer class that alerts on connection status changes.
     SSHController: Main class to handle SSH connections and command execution.
 
-The SSHController class is central to the module, providing methods to connect to a remote server, execute commands,
-and disconnect. It uses the ConnectionManager singleton from the 'backend.connection_manager' module for managing
-connections and the APIFunctionFactory from the 'api.api_function_factory' module to execute remote commands.
+The SSHController class is central to the module, providing methods to connect to a remote server, 
+execute commands, and disconnect. It uses the ConnectionManager singleton from the 
+'backend.connection_manager' module for managing connections and the APIFunctionFactory 
+from the 'api.api_function_factory' module to execute remote commands.
 The SSHView class from the 'views.ssh_view' module is optionally used for displaying messages.
 
 Each method in the SSHController class is designed for a specific operation:
@@ -32,8 +34,8 @@ Example:
 
 """
 
-from api.api_function_factory import APIFunctionFactory
-from backend.connection_manager import ConnectionManager, Observer
+from model.api.api_function_factory import APIFunctionFactory
+from model.backend.connection_manager import ConnectionManager, Observer
 from views.ssh_view import SSHView
 
 
@@ -94,7 +96,9 @@ class SSHController:
         Returns:
             None
         """
-        self.connection_manager.connect(self.host, self.port, self.username, self.password, self.key_path)
+        self.connection_manager.connect(
+            self.host, self.port, self.username, self.password, self.key_path
+        )
         self.view.show_message("Connected to " + self.host)
 
     def execute_command(self, command):
