@@ -30,7 +30,7 @@ def mock_api_function_factory():
     This fixture creates a mock for the APIFunctionFactory, which is responsible for
     creating instances of different API function classes based on function names.
     """
-    with patch("api.api_function_factory.APIFunctionFactory") as mock_factory:
+    with patch("model.api.api_function_factory.APIFunctionFactory") as mock_factory:
         mock_factory.create_api_function.side_effect = lambda func_name: {
             EXECUTE_REMOTE_COMMAND: MagicMock(spec=ExecuteRemoteCommand),
             GET_SYSTEM_STATS: MagicMock(spec=GetSystemStats),
