@@ -1,15 +1,18 @@
 """
 Unit tests for the AlertSystem class in the observer module.
 
-This module contains unit tests for the AlertSystem class, specifically testing its update method.
-The tests ensure that the AlertSystem correctly handles and responds to status updates, such as changes
-in network status. These tests use the Python unittest framework and include the use of mock objects
-to simulate and verify the behavior of the AlertSystem without the need for actual network connections or
-external dependencies.
+This module contains unit tests for the AlertSystem class, 
+specifically testing its update method. The tests ensure that the 
+AlertSystem correctly handles and responds to status updates, 
+such as changes in network status. These tests use the Python 
+unittest framework and include the use of mock objects to simulate 
+and verify the behavior of the AlertSystem without the need for actual 
+network connections or external dependencies.
 
 Functions:
-    test_alert_system_update(monkeypatch): Tests that the AlertSystem's update method prints the correct
-                                           alert message when called with a network status.
+    test_alert_system_update(monkeypatch): 
+        Tests that the AlertSystem's update method prints the correct
+        alert message when called with a network status.
 """
 from unittest.mock import MagicMock
 
