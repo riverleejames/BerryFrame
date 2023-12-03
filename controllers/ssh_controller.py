@@ -125,6 +125,15 @@ class SSHController:
                                          self.key_path)
         self.view.show_message("Connected to " + self.host)
 
+    def is_connected(self):
+        """
+        Checks if the SSH connection is active.
+
+        Returns:
+            bool: True if the connection is active, False otherwise.
+        """
+        return self.connection_manager.is_connected()
+
     def execute_command(self, command):
         """
         Executes a remote command on the connected server.
