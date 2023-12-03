@@ -170,6 +170,17 @@ class ConnectionManager:
         )
         self.notify("Connected")
 
+    def is_connected(self):
+        """
+        Checks if an SSH connection is active.
+
+        This method returns True if the SSH connection is active, False otherwise.
+
+        Returns:
+            bool: True if the SSH connection is active, False otherwise.
+        """
+        return self.ssh_client.get_transport() is not None
+
     def disconnect(self):
         """
         Closes the active SSH connection.

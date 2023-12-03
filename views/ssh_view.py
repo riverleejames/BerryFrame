@@ -19,9 +19,10 @@ Example:
     ssh_view.show_message("SSH connection established.")
 
 Note:
-    While this class currently uses the standard output for displaying messages, it can be extended or
-     modified to support other types of user interfaces, such as graphical interfaces or logging systems,
-     making it adaptable to different application requirements.
+    While this class currently uses the standard output for displaying messages, 
+    it can be extended or modified to support other types of user interfaces, 
+    such as graphical interfaces or logging systems, making it adaptable to 
+    different application requirements.
 """
 
 

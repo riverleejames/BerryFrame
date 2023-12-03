@@ -94,7 +94,8 @@ class GetSystemStats(APIFunction):
         ExecuteRemoteCommand class for executing these commands.
 
         Returns:
-            tuple: A tuple containing CPU usage, memory usage, disk space, and running process count.
+            tuple: A tuple containing CPU usage, memory usage, disk space, 
+            and running process count.
         """
         command_executor = ExecuteRemoteCommand()
         cpu_usage = command_executor.execute(

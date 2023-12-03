@@ -12,6 +12,8 @@ pytest-cov = "*"
 pylint-pytest = "*"
 pylint = "*"
 tox = "*"
+rich = "*"
+prompt-toolkit = "*"
 
 [dev-packages]
 
