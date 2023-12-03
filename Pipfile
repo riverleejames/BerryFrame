@@ -11,6 +11,7 @@ pytest-mock = "*"
 pytest-cov = "*"
 pylint-pytest = "*"
 pylint = "*"
+tox = "*"
 
 [dev-packages]
 

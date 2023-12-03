@@ -34,8 +34,8 @@ Example:
 
 """
 
-from api.api_function_factory import APIFunctionFactory
-from backend.connection_manager import ConnectionManager, Observer
+from model.api.api_function_factory import APIFunctionFactory
+from model.backend.connection_manager import ConnectionManager, Observer
 from views.ssh_view import SSHView
 
 
