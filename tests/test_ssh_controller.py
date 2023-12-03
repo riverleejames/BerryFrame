@@ -1,19 +1,21 @@
 """
 Module for testing the SSHController class.
 
-This module contains a suite of tests designed to verify the functionality of the SSHController class,
-which is responsible for managing SSH connections and interacting with the view component. The tests
-employ mock objects to simulate the behavior of the controller's dependencies and assert the correct
-interaction between these components.
+This module contains a suite of tests designed to verify the functionality of the 
+SSHController class, which is responsible for managing SSH connections and interacting 
+with the view component. The tests employ mock objects to simulate the behavior of the
+controller's dependencies and assert the correct interaction between these components.
 
 Tests in this module cover:
 - Initialization of the SSHController with proper observer attachment.
-- Functionality of the `connect` method, ensuring it invokes the ConnectionManager's connect method correctly.
-- Functionality of the `disconnect` method, ensuring it calls the ConnectionManager's disconnect method.
+- Functionality of the `connect` method, ensuring it invokes the ConnectionManager's 
+  connect method correctly.
+- Functionality of the `disconnect` method, ensuring it calls the ConnectionManager's 
+  disconnect method.
 
-The tests use the pytest framework for setup and execution, employing fixtures for common test setup tasks.
-Mock objects are used extensively to isolate the controller from its dependencies, allowing for focused and
-reliable testing of the controller's behavior.
+The tests use the pytest framework for setup and execution, employing fixtures for 
+common test setup tasks. Mock objects are used extensively to isolate the controller 
+from its dependencies, allowing for focused and reliable testing of the controller's behavior.
 
 Functions:
     reset_connection_manager: A pytest fixture to reset the connection manager before each test.
@@ -26,11 +28,12 @@ Functions:
     test_disconnect: Tests the `disconnect` method of SSHController.
 
 Example:
-    To run these tests, ensure pytest is installed and execute `pytest` in the directory containing this module.
+    To run these tests, ensure pytest is installed and execute `pytest` in the directory 
+    containing this module.
 
 Note:
-    The tests assume the presence of a `config.ini` file with valid SSH connection details. Ensure this file is
-    correctly set up and accessible to the test environment.
+    The tests assume the presence of a `config.ini` file with valid SSH connection details. 
+    Ensure this file is correctly set up and accessible to the test environment.
 """
 
 from unittest.mock import patch
@@ -62,7 +65,8 @@ def mock_connection_manager():
         A pytest fixture that provides a mock of the ConnectionManager.
 
         This fixture creates a mock for the ConnectionManager.get_instance method, allowing tests
-        to simulate and control the behavior of the ConnectionManager without making actual SSH connections.
+        to simulate and control the behavior of the ConnectionManager without making actual 
+        SSH connections.
 
         Yields:
             MagicMock: A mock object representing an instance of ConnectionManager.
@@ -108,8 +112,8 @@ def ssh_controller(mock_connection_manager, mock_view, mock_factory):
     A pytest fixture that creates an instance of SSHController with mocked dependencies.
 
     This fixture constructs an SSHController object using mocked instances of the ConnectionManager,
-    SSHView, and APIFunctionFactory. It is used to test the SSHController's methods in isolation from
-    its external dependencies.
+    SSHView, and APIFunctionFactory. It is used to test the SSHController's methods in 
+    isolation from its external dependencies.
 
     Args:
         mock_connection_manager (MagicMock): The mock connection manager instance.
@@ -127,8 +131,8 @@ def test_initialization(ssh_controller, mock_connection_manager):
     Tests the initialization process of the SSHController.
 
     This test verifies that the SSHController correctly attaches itself as an observer to the
-    ConnectionManager during its initialization. The test checks the number of times the attach method
-    is called on the mock ConnectionManager.
+    ConnectionManager during its initialization. The test checks the number of times the 
+    attach method is called on the mock ConnectionManager.
 
     Args:
         ssh_controller (SSHController): The SSHController instance to be tested.
@@ -144,8 +148,9 @@ def test_connect(ssh_controller, mock_connection_manager, mock_view):
     """
     Test the connect method of the SSH controller.
 
-    This test verifies that the `connect` method of the SSH controller correctly calls the `connect` method of the
-    connection manager with the expected parameters and shows the appropriate message on the view.
+    This test verifies that the `connect` method of the SSH controller correctly calls the 
+    `connect` method of the connection manager with the expected parameters and shows the 
+    appropriate message on the view.
 
     Args:
         ssh_controller (obj): The SSH controller object.
@@ -156,7 +161,8 @@ def test_connect(ssh_controller, mock_connection_manager, mock_view):
         None
     """
     ssh_controller.connect()
-    mock_connection_manager.connect.assert_called_with("host", 22, "username", "password", "key_path")
+    mock_connection_manager.connect.assert_called_with("host", 22, "username", "password",
+                                                        "key_path")
     mock_view.show_message.assert_called_with("Connected to host")
 
 
@@ -164,8 +170,9 @@ def test_disconnect(ssh_controller, mock_connection_manager, mock_view):
     """
     Test the disconnect method of the SSH controller.
 
-    This test verifies that the `disconnect` method of the SSH controller correctly calls the `disconnect` method of
-    the connection manager and shows the appropriate message on the view.
+    This test verifies that the `disconnect` method of the SSH controller correctly calls 
+    the `disconnect` method of the connection manager and shows the appropriate message 
+    on the view.
 
     Args:
         ssh_controller (obj): The SSH controller object.
