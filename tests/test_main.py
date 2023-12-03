@@ -7,7 +7,7 @@ mocking external dependencies and user inputs to ensure that each function
 behaves as expected under different scenarios.
 """
 
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, ANY
 import main
 
 @patch('main.console')
@@ -85,3 +85,37 @@ def test_disconnect_ssh(mock_console):
     main.disconnect_ssh(mock_controller)
     mock_controller.disconnect.assert_called_once()
     mock_console.print.assert_called()  # Check if print is called with the right arguments
+
+@patch('main.check_ssh_connection', return_value=True)
+@patch('main.console')
+def test_execute_neofetch_command(mock_console, mock_check_ssh):
+    """
+    Tests the execute_neofetch_command function of the SSH Management System.
+
+    This test verifies if the execute_neofetch_command function correctly handles
+    the execution of the Neofetch command on the remote server when the SSH
+    connection is active.
+    """
+    mock_controller = Mock()
+    mock_invoker = Mock()
+
+    main.execute_neofetch_command(mock_controller, mock_invoker)
+    mock_invoker.execute_command.assert_called_once_with(ANY)
+    mock_console.print.assert_called()  # Check if print is called with the right arguments
+
+@patch('main.check_ssh_connection', return_value=True)
+@patch('main.console')
+def test_execute_list_files_command(mock_console, mock_check_ssh):
+    """
+    Tests the execute_list_files_command function of the SSH Management System.
+
+    This test checks if the function correctly handles the execution of the command 
+    to list files on the remote server when the SSH connection is active.
+    """
+    mock_controller = Mock()
+    mock_invoker = Mock()
+
+    main.execute_list_files_command(mock_controller, mock_invoker)
+    mock_invoker.execute_command.assert_called_once_with(ANY)
+    mock_console.print.assert_called()  # Check if print is called with the right arguments
+
