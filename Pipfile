@@ -8,8 +8,10 @@ paramiko = "*"
 pytest = "*"
 black = "*"
 pytest-mock = "*"
-pylint-pytest = "*"
 pytest-cov = "*"
+pylint-pytest = "*"
+pylint = "*"
+tox = "*"
 
 [dev-packages]
 
